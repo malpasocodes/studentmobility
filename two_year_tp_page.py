@@ -9,7 +9,9 @@ from create_plots import plot_top_performers
 def show():
 
     st.title("2-Year Colleges (Top Performers)")
-    st.write("The college enrolls at least 10% from the bottom quintile (Q1) and has a minimum of 1000 students.")
+    st.write("To qualify as top performer, the college must enroll at least 10% of its students" 
+             "from the bottom quintile (Q1) and have a minimum of 1000 students in the cohort group."
+             "For 2-year colleges, we present mobility rates for **Q1 to Q2**, **Q1 to Q5**, and a composite mobility score.")
     
     # load data
     df = load_data()
@@ -20,8 +22,8 @@ def show():
     
     ############################ Q1 to Q2 Mobility Rate ################################
     # get top performers for Q1 to Q2 mobility rate
-    top_performers_q1q2 = get_top_performers(df, iclevel=2, n=50, count=1000, par_q1_min=0.1, criterion='kq2_cond_parq1')
-    st.markdown("<h2 style='font-size:24px;color:blue'>Figure 1: Top 50 Performers - Q1 to Q2 Mobility Rate</h2>", unsafe_allow_html=True)
+    top_performers_q1q2 = get_top_performers(df, iclevel=2, n=50, count=500, par_q1_min=0.1, criterion='kq2_cond_parq1')
+    st.markdown("<h2 style='font-size:24px;color:brown'>Figure 1: Top 50 Performers - Q1 to Q2 Mobility Rate</h2>", unsafe_allow_html=True)
 
 
     # plot top performers
@@ -35,8 +37,8 @@ def show():
     ############################ Q1 to Q5 Mobility Rate ################################
 
     # get top performers for Q1 to Q5 mobility rate
-    top_performers_q1q5 = get_top_performers(df, iclevel=2, n=50, count=1000, par_q1_min=0.1, criterion='kq5_cond_parq1')
-    st.markdown("<h2 style='font-size:24px;color:blue'>Figure 2: Top 50 Performers - Q1 to Q5 Mobility Rate</h2>", unsafe_allow_html=True)
+    top_performers_q1q5 = get_top_performers(df, iclevel=2, n=50, count=500, par_q1_min=0.1, criterion='kq5_cond_parq1')
+    st.markdown("<h2 style='font-size:24px;color:brown'>Figure 2: Top 50 Performers - Q1 to Q5 Mobility Rate</h2>", unsafe_allow_html=True)
 
 
 
@@ -51,8 +53,8 @@ def show():
 
     ############################ Composite Mobility Score ################################
      # get top performers
-    top_performers_cms = get_top_performers(df, iclevel= 2, n=50, count=1000, par_q1_min=0.1, criterion='composite_mobility_score')
-    st.markdown("<h2 style='font-size:24px;color:blue'>Figure 2: Top 50 Performers - Composite Mobility Score</h2>", unsafe_allow_html=True)
+    top_performers_cms = get_top_performers(df, iclevel= 2, n=50, count=500, par_q1_min=0.1, criterion='composite_mobility_score')
+    st.markdown("<h2 style='font-size:24px;color:brown'>Figure 3: Top 50 Performers - Composite Mobility Score</h2>", unsafe_allow_html=True)
     fig3 = plot_top_performers(top_performers_cms, 'Composite Mobility Score')
     st.plotly_chart(fig3)
 
@@ -61,11 +63,13 @@ def show():
 
     ############################ Top Performers Table (Q1 to Q2) ################################
     # display top performers
-    st.markdown("<h2 style='font-size:24px;color:blue'>Table 1: Top 50 Performers - Q1 to Q2 Mobility Rate</h2>", unsafe_allow_html=True)
+    st.markdown("<h2 style='font-size:24px;color:brown'>Table 1: Top 50 Performers - Q1 to Q2 Mobility Rate</h2>", unsafe_allow_html=True)
     
     columns = ['Name', 'State', '[Q1 to Q2]', '[Q1 Pctg]', 'Tier Group']
     top_performers_q1q2 = top_performers_q1q2[columns]
     top_performers_q1q2 = top_performers_q1q2.round(2)
+    top_performers_q1q2.reset_index(drop=True, inplace=True)
+    top_performers_q1q2.index += 1
 
     st.write(top_performers_q1q2)
     # Add a dashed line separator
@@ -76,11 +80,14 @@ def show():
     ############################ Top Performers Table (Q1 to Q5) ################################
 
     # display top performers
-    st.markdown("<h2 style='font-size:24px;color:blue'>Table 2: Top 50 Performers - Q1 to Q5 Mobility Rate</h2>", unsafe_allow_html=True)
+    st.markdown("<h2 style='font-size:24px;color:brown'>Table 2: Top 50 Performers - Q1 to Q5 Mobility Rate</h2>", unsafe_allow_html=True)
 
     columns = ['Name', 'State', '[Q1 to Q5]', '[Q1 Pctg]', 'Tier Group']
     top_performers_q1q5 = top_performers_q1q5[columns]
     top_performers_q1q5 = top_performers_q1q5.round(2)
+    top_performers_q1q5.reset_index(drop=True, inplace=True)
+    top_performers_q1q5.index += 1
+
 
     st.write(top_performers_q1q5)
 
@@ -89,11 +96,13 @@ def show():
 
 
      # display top performers
-    st.markdown("<h2 style='font-size:24px;color:blue'>Table 2: Top 50 Performers - Composite Mobility Score</h2>", unsafe_allow_html=True)
+    st.markdown("<h2 style='font-size:24px;color:brown'>Table 3: Top 50 Performers - Composite Mobility Score</h2>", unsafe_allow_html=True)
     
     columns = ['Name', 'State', 'Composite Mobility Score', '[Q1 Pctg]', 'Tier Group']
     top_performers_cms = top_performers_cms[columns]
     top_performers_cms = top_performers_cms.round(2)
+    top_performers_cms.reset_index(drop=True, inplace=True)
+    top_performers_cms.index += 1
 
     st.write(top_performers_cms)
     
