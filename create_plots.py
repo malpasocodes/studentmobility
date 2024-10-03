@@ -26,7 +26,7 @@ def plot_top_performers(top_performers, criterion):
 
     fig = px.scatter(top_performers, x='[Q1 Pctg]', y=criterion, color='Tier Group', size='Count',
                      color_discrete_map=tier_group_colors, hover_name='Name', hover_data=['[Q1 Pctg]', 'State', 'Count'],
-                     labels={'[Q1 Pctg]': 'Percent from Bottom Quintile (Q1)', criterion: criterion})
+                     labels={'[Q1 Pctg]': 'Percent Enrolled from Bottom Quintile (Q1)', criterion: criterion})
     
     # Update x-axis to display percentages
     fig.update_xaxes(tickformat=".0%")
@@ -42,10 +42,9 @@ def plot_mobility_score_distribution(df, criterion):
 
 def plot_scatter(df, x_axis, y_axis):
 
-    # df = df[df['elite_group'] != 'Other']
 
     fig = px.scatter(df, x=x_axis, y=y_axis, size='count', color='tier_group', color_discrete_map=tier_group_colors,
-                     hover_name='name', hover_data=[x_axis, y_axis, 'state', 'count'],)
+                     hover_name='Name', hover_data=[x_axis, y_axis, 'State', 'count'],)
     return fig
 
 def plot_distribution(tier):
@@ -63,3 +62,14 @@ def plot_distribution(tier):
      # Add text annotations
     fig.update_traces(texttemplate='%{y:.2f}', textposition='outside')
     return fig
+
+
+def plot_3d_scatter(df, x_axis, y_axis, z_axis):
+
+    fig = px.scatter_3d(df, x=x_axis, y=y_axis, z=z_axis, color='tier_group', color_discrete_map=tier_group_colors,
+                        hover_name='name', hover_data=[x_axis, y_axis, z_axis, 'state', 'count'])
+    
+    fig.update_traces(marker=dict(size=2))
+    return fig
+
+

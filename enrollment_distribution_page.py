@@ -63,3 +63,13 @@ def show():
     st.plotly_chart(fig3)
 
     st.markdown("<hr style='border: 1px dashed black;'>", unsafe_allow_html=True)
+
+    ############################ Four-year for-profit ################################
+
+    four_year_for_profit = df[df['tier'] == 10]
+
+    st.markdown("<h2 style='font-size:24px;color:blue'>Figure 5: Four-year for-profit</h2>", unsafe_allow_html=True)
+
+    # plot plot_distribution
+    fig4 = plot_distribution(four_year_for_profit)
+    st.plotly_chart(fig4)

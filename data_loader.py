@@ -107,6 +107,31 @@ def calc_distribution(df):
     
     return df
 
+def calc_statistics(df, tier):
+    columns = ['name', 'state', 'tier_group', 'par_q1', 'par_q2', 'par_q3', 'par_q4', 'par_q5', 'tier']
+    df = df[columns]
+    
+    # Filter for the specified tier
+    tier_df = df[df['tier'] == tier]
+    
+    # Calculate statistics for the parental income distribution columns
+    columns_to_analyze = ['par_q1', 'par_q2', 'par_q3', 'par_q4', 'par_q5']
+    
+    statistics = {
+        'mean': tier_df[columns_to_analyze].mean(),
+        'std_dev': tier_df[columns_to_analyze].std(),
+        'variance': tier_df[columns_to_analyze].var(),
+        'min': tier_df[columns_to_analyze].min(),
+        'max': tier_df[columns_to_analyze].max(),
+        'median': tier_df[columns_to_analyze].median()
+    }
+    
+    # Convert the statistics dictionary to a DataFrame for easier viewing
+    stats_df = pd.DataFrame(statistics)
+    stats_df.index = ['Q1', 'Q2', 'Q3', 'Q4', 'Q5']
+    
+    return stats_df
+
 
 
     
